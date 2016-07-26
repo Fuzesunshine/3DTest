@@ -13,15 +13,7 @@
 @end
 
 @implementation RootViewController {
-    UIImageView *img;
-    NSUInteger initialLocation;
     NSUInteger num;
-    
-    UIImageView *img1;
-    UIImageView *img2;
-    UIImageView *img3;
-    UIImageView *img4;
-    UIImageView *img0;
     
     NSArray *pictureNames;
     NSMutableArray *imgViews;
@@ -72,77 +64,6 @@
     }
 }
 
-- (void)panHandle:(UIPanGestureRecognizer *)recognizer {
-    CGPoint location = [recognizer locationInView:self.view];
-    if (recognizer.state == UIGestureRecognizerStateBegan) {
-        num = location.x;
-    }
-    
-    if (YES) {
-        CGFloat percent = M_PI / (6*287);
-        
-        POPBasicAnimation *rotationAnimation = [POPBasicAnimation animationWithPropertyNamed:kPOPLayerRotationY];
-        rotationAnimation.duration = 0.01;
-        NSLog(@"%f, %lu",location.x, (unsigned long)num);
-        POPBasicAnimation *moveAnimation = [POPBasicAnimation animationWithPropertyNamed:kPOPLayerPositionX];
-        moveAnimation.duration = 0.01;
-        
-        if ((location.x-num)>300) {
-            rotationAnimation.toValue = @(-(300)*percent+M_PI/6);
-            moveAnimation.toValue = @(300+initialLocation);
-        } else if ((location.x-num)<-300) {
-            rotationAnimation.toValue = @(-(-300)*percent+M_PI/6);
-            moveAnimation.toValue = @(-300+initialLocation);
-        } else {
-            rotationAnimation.toValue = @(-(location.x-num)*percent+M_PI/6);
-            moveAnimation.toValue = @(location.x-num+initialLocation);
-        }
-        [img.layer pop_addAnimation:moveAnimation forKey:@"moveAnimation"];
-        [img.layer pop_addAnimation:rotationAnimation forKey:@"rotationAnimation"];
-        
-        if (recognizer.state == UIGestureRecognizerStateEnded || recognizer.state == UIGestureRecognizerStateCancelled) {
-            POPSpringAnimation *recoverAnimation = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerRotationY];
-            recoverAnimation.springBounciness = 18.0f;
-            recoverAnimation.dynamicsMass = 2.0f;
-            recoverAnimation.dynamicsTension = 200;
-            
-//            initialLocation = -img.frame.origin.x-img.frame.size.width/2;
-            if ((location.x-num)>287) {
-                initialLocation = 287+initialLocation;
-                recoverAnimation.toValue = @(0);
-            } else if ((location.x-num)<-200) {
-                initialLocation = -200+initialLocation;
-                recoverAnimation.toValue = @(M_PI/4);
-            } else {
-                recoverAnimation.toValue = @(M_PI/6);
-            }
-            
-            POPSpringAnimation *recover = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerPositionX];
-            recover.springBounciness = 18.0f;
-            recover.dynamicsMass = 2.0f;
-            recover.dynamicsTension = 200;
-            recover.toValue = @(initialLocation);
-            [img.layer pop_addAnimation:recover forKey:@"recover"];
-            [img.layer pop_addAnimation:recoverAnimation forKey:@"recoverAnimation"];
-            
-            NSLog(@"%lu", (unsigned long)initialLocation);
-//            img.frame = CGRectMake(0, +location.x-initialLocation, 774/2, 300);
-        }
-    }
-    
-//    if (location.y < 0 || location.y>(CGRectGetWidth(img.bounds))) {
-//        recognizer.enabled = NO;
-//        POPSpringAnimation *recoverAnimation = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerRotationY];
-//        recoverAnimation.springBounciness = 18.0f;
-//        recoverAnimation.dynamicsMass = 2.0f;
-//        recoverAnimation.dynamicsTension = 200;
-//        recoverAnimation.toValue = @(0);
-//        [img.layer pop_addAnimation:recoverAnimation forKey:@"recoverAnimation"];
-//    }
-    
-    recognizer.enabled = YES;
-}
-
 - (void)showImageAndReflection:(UIImageView *)view {
     // 制作reflection
     CALayer *layer = view.layer;
@@ -167,19 +88,12 @@
     mask.colors = [NSArray arrayWithObjects:
                    (__bridge id)[UIColor clearColor].CGColor,
                    (__bridge id)[UIColor whiteColor].CGColor, nil];
-//    mask.colors = [NSArray arrayWithObjects:
-//                   (__bridge id)[UIColor clearColor].CGColor,
-//                    nil];
     mask.startPoint = CGPointMake(0.5, 0.65);
     mask.endPoint = CGPointMake(0.5, 1);
     reflectLayer.mask = mask;
     
     // 作为layer的sublayer
     [layer addSublayer:reflectLayer];
-    // 加入UICoverFlowView的sublayers
-//    UIView *reView =[[UIView alloc]init];
-//    reView.bounds = layer.bounds;
-//    [view.layer addSublayer:layer];
 }
 
 - (void)initPictures {
@@ -235,23 +149,23 @@
         POPBasicAnimation *moveAnimation = [POPBasicAnimation animationWithPropertyNamed:kPOPLayerPositionX];
         moveAnimation.duration = 0.01;
         
-        if ((location.x-num)>400) {
+        if ((location.x-num)>350) {
             for (int i = 0; i<4; i++) {
                 POPBasicAnimation *rotation = [rotationAnimations objectAtIndex:i];
-                rotation.toValue = @(-(400)*percent+(2-i)*M_PI/6);
+                rotation.toValue = @(-(350)*percent+(2-i)*M_PI/6);
                 POPBasicAnimation *move = [moveAnimations objectAtIndex:i];
-                move.toValue = @(400-62+i*287);
+                move.toValue = @(350-62+i*287);
                 
                 UIImageView *imgView = [imgViews objectAtIndex:i];
                 [imgView.layer pop_addAnimation:rotation forKey:@"rotation"];
                 [imgView.layer pop_addAnimation:move forKey:@"move"];
             }
-        } else if ((location.x-num)<-400) {
+        } else if ((location.x-num)<-350) {
             for (int i = 1; i<5; i++) {
                 POPBasicAnimation *rotation = [rotationAnimations objectAtIndex:i];
-                rotation.toValue = @(-(-400)*percent+(2-i)*M_PI/6);
+                rotation.toValue = @(-(-350)*percent+(2-i)*M_PI/6);
                 POPBasicAnimation *move = [moveAnimations objectAtIndex:i];
-                move.toValue = @(-400-62+i*287);
+                move.toValue = @(-350-62+i*287);
                 
                 UIImageView *imgView = [imgViews objectAtIndex:i];
                 [imgView.layer pop_addAnimation:rotation forKey:@"rotation"];
@@ -303,7 +217,7 @@
             recoverAnimation.dynamicsTension = 200;
             
             //            initialLocation = -img.frame.origin.x-img.frame.size.width/2;
-            if ((location.x-num)>100) {
+            if ((location.x-num)>50) {
                 for (int i = 0; i<4; i++) {
                     POPBasicAnimation *rotation = [rotationEndAnimations objectAtIndex:i];
                     rotation.toValue = @(-(287)*percent+(2-i)*M_PI/6);
@@ -316,7 +230,7 @@
                 }
                 [self moveRight];
                 
-            } else if ((location.x-num)<-100) {
+            } else if ((location.x-num)<-50) {
                 for (int i = 1; i<5; i++) {
                     POPBasicAnimation *rotation = [rotationEndAnimations objectAtIndex:i];
                     rotation.toValue = @(-(-287)*percent+(2-i)*M_PI/6);
