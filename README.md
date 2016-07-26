@@ -1,6 +1,6 @@
 #制作POP翻页动画
 我利用了POP库制作了简单的广告展示的翻页效果：
-![Markdown](https://github.com/Fuzesunshine/3DTest/yanshi.gif)
+![image](https://github.com/Fuzesunshine/3DTest/blob/master/yanshi.gif)
 **源码在[这里](https://github.com/Fuzesunshine/3DTest)**
 ## 大致思路
 首先简单分析一下动画效果：
