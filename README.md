@@ -1,4 +1,12 @@
-# 制作POP翻页动画
+---
+title: 制作POP翻页动画
+date: 2016-07-26 20:16:59
+categories:
+- learning
+tags:
+- iOS 
+- POP
+---
 我利用了POP库制作了简单的广告展示的翻页效果：
 ![Markdown](http://i1.piimg.com/568443/772b63fdb0292935.gif)
 **源码在[这里](https://github.com/Fuzesunshine/3DTest)**
@@ -13,61 +21,61 @@
 
 ```objective-c
 - (void)initPictures {
-        for (int i = 0; i<5; i++) {
-                    UIImageView *imgView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:[pictureNames objectAtIndex:i]]];
-                            imgView.frame = CGRectMake(0, 0, 319, 187);
-                                    imgView.layer.anchorPoint = CGPointMake(0.5, 0.5);
-                                            imgView.layer.anchorPointZ = 100.0f;
-                                                    imgView.layer.position = CGPointMake(-62+i*287, 374/4+30);
-                                                            imgView.layer.transform = [self setTransform3D];
-                                                                    imgView.userInteractionEnabled = YES;
-                                                                            
-                                                                            POPBasicAnimation *initRotationAnimation = [POPBasicAnimation animationWithPropertyNamed:kPOPLayerRotationY];
-                                                                                    initRotationAnimation.duration = 0;
-                                                                                            initRotationAnimation.toValue = @((2-i)*M_PI/6);
-                                                                                                    
-                                                                                                    [imgView.layer pop_addAnimation:initRotationAnimation forKey:@"initRotation"];
-                                                                                                            
-                                                                                                            [self showImageAndReflection:imgView];
-                                                                                                                    
-                                                                                                                    [imgViews addObject:imgView];
-                                                                                                                            [self.view addSubview:imgView];
-                                                                                                                                }
+    for (int i = 0; i<5; i++) {
+        UIImageView *imgView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:[pictureNames objectAtIndex:i]]];
+        imgView.frame = CGRectMake(0, 0, 319, 187);
+        imgView.layer.anchorPoint = CGPointMake(0.5, 0.5);
+        imgView.layer.anchorPointZ = 100.0f;
+        imgView.layer.position = CGPointMake(-62+i*287, 374/4+30);
+        imgView.layer.transform = [self setTransform3D];
+        imgView.userInteractionEnabled = YES;
+        
+        POPBasicAnimation *initRotationAnimation = [POPBasicAnimation animationWithPropertyNamed:kPOPLayerRotationY];
+        initRotationAnimation.duration = 0;
+        initRotationAnimation.toValue = @((2-i)*M_PI/6);
+        
+        [imgView.layer pop_addAnimation:initRotationAnimation forKey:@"initRotation"];
+        
+        [self showImageAndReflection:imgView];
+        
+        [imgViews addObject:imgView];
+        [self.view addSubview:imgView];
+    }
 }
 ```
 这里通过*showImageAndReflection*函数来设置图片的倒影：
 
 ```objective-c
 - (void)showImageAndReflection:(UIImageView *)view {
-        // 制作reflection
-        CALayer *layer = view.layer;
-            CALayer *reflectLayer = [CALayer layer];
-                reflectLayer.contents = layer.contents;
-                    reflectLayer.bounds = layer.bounds;
-                        reflectLayer.position = CGPointMake(layer.bounds.size.width/2, layer.bounds.size.height*1.5);
-                            reflectLayer.transform = CATransform3DMakeRotation(M_PI, 1, 0, 0);
-                                
-                                // 给该reflection加个半透明的layer
-                                CALayer *blackLayer = [CALayer layer];
-                                    blackLayer.backgroundColor = [UIColor whiteColor].CGColor;
-                                        blackLayer.bounds = reflectLayer.bounds;
-                                            blackLayer.position = CGPointMake(blackLayer.bounds.size.width/2, blackLayer.bounds.size.height/2);
-                                                blackLayer.opacity = 0.6;
-                                                    [reflectLayer addSublayer:blackLayer];
-                                                        
-                                                        // 给该reflection加个mask
-                                                        CAGradientLayer *mask = [CAGradientLayer layer];
-                                                            mask.bounds = reflectLayer.bounds;
-                                                                mask.position = CGPointMake(mask.bounds.size.width/2, mask.bounds.size.height/2);
-                                                                    mask.colors = [NSArray arrayWithObjects:
-                                                                                           (__bridge id)[UIColor clearColor].CGColor,
-                                                                                           (__bridge id)[UIColor whiteColor].CGColor, nil];
-                                                                        mask.startPoint = CGPointMake(0.5, 0.65);
-                                                                            mask.endPoint = CGPointMake(0.5, 1);
-                                                                                reflectLayer.mask = mask;
-                                                                                    
-                                                                                    // 作为layer的sublayer
-                                                                                    [layer addSublayer:reflectLayer];
+    // 制作reflection
+    CALayer *layer = view.layer;
+    CALayer *reflectLayer = [CALayer layer];
+    reflectLayer.contents = layer.contents;
+    reflectLayer.bounds = layer.bounds;
+    reflectLayer.position = CGPointMake(layer.bounds.size.width/2, layer.bounds.size.height*1.5);
+    reflectLayer.transform = CATransform3DMakeRotation(M_PI, 1, 0, 0);
+    
+    // 给该reflection加个半透明的layer
+    CALayer *blackLayer = [CALayer layer];
+    blackLayer.backgroundColor = [UIColor whiteColor].CGColor;
+    blackLayer.bounds = reflectLayer.bounds;
+    blackLayer.position = CGPointMake(blackLayer.bounds.size.width/2, blackLayer.bounds.size.height/2);
+    blackLayer.opacity = 0.6;
+    [reflectLayer addSublayer:blackLayer];
+    
+    // 给该reflection加个mask
+    CAGradientLayer *mask = [CAGradientLayer layer];
+    mask.bounds = reflectLayer.bounds;
+    mask.position = CGPointMake(mask.bounds.size.width/2, mask.bounds.size.height/2);
+    mask.colors = [NSArray arrayWithObjects:
+                   (__bridge id)[UIColor clearColor].CGColor,
+                   (__bridge id)[UIColor whiteColor].CGColor, nil];
+    mask.startPoint = CGPointMake(0.5, 0.65);
+    mask.endPoint = CGPointMake(0.5, 1);
+    reflectLayer.mask = mask;
+    
+    // 作为layer的sublayer
+    [layer addSublayer:reflectLayer];
 }
 ```
 代码参考**[这里](http://www.programgo.com/article/76012388626/)**
@@ -82,142 +90,142 @@ UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc]initWithTarg
 
 ```objective-c
 - (void)panAllHandle:(UIPanGestureRecognizer *)recognizer {
-        CGPoint location = [recognizer locationInView:self.view];
-            if (recognizer.state == UIGestureRecognizerStateBegan) {
-                        num = location.x;
-                            }
-                NSMutableArray *rotationAnimations = [[NSMutableArray alloc]init];
-                    NSMutableArray *moveAnimations = [[NSMutableArray alloc]init];
-                        
-                        NSMutableArray *rotationEndAnimations = [[NSMutableArray alloc]init];
-                            NSMutableArray *moveEndAnimations = [[NSMutableArray alloc]init];
-                                
-                                for (int i = 0; i<5; i++) {
-                                            POPBasicAnimation *rotationAnimation = [POPBasicAnimation animationWithPropertyNamed:kPOPLayerRotationY];
-                                                    rotationAnimation.duration = 0.01;
-                                                            POPBasicAnimation *moveAnimation = [POPBasicAnimation animationWithPropertyNamed:kPOPLayerPositionX];
-                                                                    moveAnimation.duration = 0.01;
-                                                                            
-                                                                            [rotationAnimations addObject:rotationAnimation];
-                                                                                    [moveAnimations addObject:moveAnimation];
-                                                                                        }
-                                    if (YES) {
-                                                CGFloat percent = M_PI / (6*287);
-                                                        
-                                                        POPBasicAnimation *rotationAnimation = [POPBasicAnimation animationWithPropertyNamed:kPOPLayerRotationY];
-                                                                rotationAnimation.duration = 0.01;
-                                                                        NSLog(@"%f, %lu",location.x, (unsigned long)num);
-                                                                                POPBasicAnimation *moveAnimation = [POPBasicAnimation animationWithPropertyNamed:kPOPLayerPositionX];
-                                                                                        moveAnimation.duration = 0.01;
-                                                                                                
-                                                                                                if ((location.x-num)>350) {
-                                                                                                                for (int i = 0; i<4; i++) {
-                                                                                                                                    POPBasicAnimation *rotation = [rotationAnimations objectAtIndex:i];
-                                                                                                                                                    rotation.toValue = @(-(350)*percent+(2-i)*M_PI/6);
-                                                                                                                                                                    POPBasicAnimation *move = [moveAnimations objectAtIndex:i];
-                                                                                                                                                                                    move.toValue = @(350-62+i*287);
-                                                                                                                                                                                                    
-                                                                                                                                                                                                    UIImageView *imgView = [imgViews objectAtIndex:i];
-                                                                                                                                                                                                                    [imgView.layer pop_addAnimation:rotation forKey:@"rotation"];
-                                                                                                                                                                                                                                    [imgView.layer pop_addAnimation:move forKey:@"move"];
-                                                                                                                                                                                                                                                }
-                                                                                                                        } else if ((location.x-num)<-350) {
-                                                                                                                                        for (int i = 1; i<5; i++) {
-                                                                                                                                                            POPBasicAnimation *rotation = [rotationAnimations objectAtIndex:i];
-                                                                                                                                                                            rotation.toValue = @(-(-350)*percent+(2-i)*M_PI/6);
-                                                                                                                                                                                            POPBasicAnimation *move = [moveAnimations objectAtIndex:i];
-                                                                                                                                                                                                            move.toValue = @(-350-62+i*287);
-                                                                                                                                                                                                                            
-                                                                                                                                                                                                                            UIImageView *imgView = [imgViews objectAtIndex:i];
-                                                                                                                                                                                                                                            [imgView.layer pop_addAnimation:rotation forKey:@"rotation"];
-                                                                                                                                                                                                                                                            [imgView.layer pop_addAnimation:move forKey:@"move"];
-                                                                                                                                                                                                                                                                        }
-                                                                                                                                                } else if ((location.x - num)>0) {
-                                                                                                                                                                for (int i = 0; i<4; i++) {
-                                                                                                                                                                                    POPBasicAnimation *rotation = [rotationAnimations objectAtIndex:i];
-                                                                                                                                                                                                    rotation.toValue = @(-(location.x-num)*percent+(2-i)*M_PI/6);
-                                                                                                                                                                                                                    POPBasicAnimation *move = [moveAnimations objectAtIndex:i];
-                                                                                                                                                                                                                                    move.toValue = @(location.x-num-62+i*287);
-                                                                                                                                                                                                                                                    
-                                                                                                                                                                                                                                                    UIImageView *imgView = [imgViews objectAtIndex:i];
-                                                                                                                                                                                                                                                                    [imgView.layer pop_addAnimation:rotation forKey:@"rotation"];
-                                                                                                                                                                                                                                                                                    [imgView.layer pop_addAnimation:move forKey:@"move"];
-                                                                                                                                                                                                                                                                                                }
-                                                                                                                                                                        } else if ((location.x - num)<=0) {
-                                                                                                                                                                                        for (int i = 1; i<5; i++) {
-                                                                                                                                                                                                            POPBasicAnimation *rotation = [rotationAnimations objectAtIndex:i];
-                                                                                                                                                                                                                            rotation.toValue = @(-(location.x-num)*percent+(2-i)*M_PI/6);
-                                                                                                                                                                                                                                            POPBasicAnimation *move = [moveAnimations objectAtIndex:i];
-                                                                                                                                                                                                                                                            move.toValue = @(location.x-num-62+i*287);
-                                                                                                                                                                                                                                                                            
-                                                                                                                                                                                                                                                                            UIImageView *imgView = [imgViews objectAtIndex:i];
-                                                                                                                                                                                                                                                                                            [imgView.layer pop_addAnimation:rotation forKey:@"rotation"];
-                                                                                                                                                                                                                                                                                                            [imgView.layer pop_addAnimation:move forKey:@"move"];
-                                                                                                                                                                                                                                                                                                                        }
-                                                                                                                                                                                                }
-                                                                                                        
-                                                                                                        if (recognizer.state == UIGestureRecognizerStateEnded || recognizer.state == UIGestureRecognizerStateCancelled) {
-                                                                                                                        for (int i = 0; i<5; i++) {
-                                                                                                                                            POPSpringAnimation *recoverAnimation = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerRotationY];
-                                                                                                                                                            recoverAnimation.springBounciness = 18.0f;
-                                                                                                                                                                            recoverAnimation.dynamicsMass = 2.0f;
-                                                                                                                                                                                            recoverAnimation.dynamicsTension = 200;
-                                                                                                                                                                                                            
-                                                                                                                                                                                                            POPSpringAnimation *recover = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerPositionX];
-                                                                                                                                                                                                                            recover.springBounciness = 18.0f;
-                                                                                                                                                                                                                                            recover.dynamicsMass = 2.0f;
-                                                                                                                                                                                                                                                            recover.dynamicsTension = 200;
-                                                                                                                                                                                                                                                                            
-                                                                                                                                                                                                                                                                            [rotationEndAnimations addObject:recoverAnimation];
-                                                                                                                                                                                                                                                                                            [moveEndAnimations addObject:recover];
-                                                                                                                                                                                                                                                                                                        }
-                                                                                                                                    
-                                                                                                                                    POPSpringAnimation *recoverAnimation = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerRotationY];
-                                                                                                                                                recoverAnimation.springBounciness = 18.0f;
-                                                                                                                                                            recoverAnimation.dynamicsMass = 2.0f;
-                                                                                                                                                                        recoverAnimation.dynamicsTension = 200;
-                                                                                                                                                                                    
-                                                                                                                                                                                    //            initialLocation = -img.frame.origin.x-img.frame.size.width/2;
-                                                                                                                                                                                    if ((location.x-num)>50) {
-                                                                                                                                                                                                        for (int i = 0; i<4; i++) {
-                                                                                                                                                                                                                                POPBasicAnimation *rotation = [rotationEndAnimations objectAtIndex:i];
-                                                                                                                                                                                                                                                    rotation.toValue = @(-(287)*percent+(2-i)*M_PI/6);
-                                                                                                                                                                                                                                                                        POPBasicAnimation *move = [moveEndAnimations objectAtIndex:i];
-                                                                                                                                                                                                                                                                                            move.toValue = @(287-62+i*287);
-                                                                                                                                                                                                                                                                                                                
-                                                                                                                                                                                                                                                                                                                UIImageView *imgView = [imgViews objectAtIndex:i];
-                                                                                                                                                                                                                                                                                                                                    [imgView.layer pop_addAnimation:rotation forKey:@"rotation"];
-                                                                                                                                                                                                                                                                                                                                                        [imgView.layer pop_addAnimation:move forKey:@"move"];
-                                                                                                                                                                                                                                                                                                                                                                        }
-                                                                                                                                                                                                                        [self moveRight];
-                                                                                                                                                                                                                                        
-                                                                                                                                                                                                                                    } else if ((location.x-num)<-50) {
-                                                                                                                                                                                                                                                        for (int i = 1; i<5; i++) {
-                                                                                                                                                                                                                                                                                POPBasicAnimation *rotation = [rotationEndAnimations objectAtIndex:i];
-                                                                                                                                                                                                                                                                                                    rotation.toValue = @(-(-287)*percent+(2-i)*M_PI/6);
-                                                                                                                                                                                                                                                                                                                        POPBasicAnimation *move = [moveEndAnimations objectAtIndex:i];
-                                                                                                                                                                                                                                                                                                                                            move.toValue = @(-287-62+i*287);
-                                                                                                                                                                                                                                                                                                                                                                
-                                                                                                                                                                                                                                                                                                                                                                UIImageView *imgView = [imgViews objectAtIndex:i];
-                                                                                                                                                                                                                                                                                                                                                                                    [imgView.layer pop_addAnimation:rotation forKey:@"rotation"];
-                                                                                                                                                                                                                                                                                                                                                                                                        [imgView.layer pop_addAnimation:move forKey:@"move"];
-                                                                                                                                                                                                                                                                                                                                                                                                                        }
-                                                                                                                                                                                                                                                                        [self moveLeft];
-                                                                                                                                                                                                                                                                                        
-                                                                                                                                                                                                                                                                                    } else {
-                                                                                                                                                                                                                                                                                                        for (int i = 0; i<5; i++) {
-                                                                                                                                                                                                                                                                                                                                POPBasicAnimation *rotation = [rotationEndAnimations objectAtIndex:i];
-                                                                                                                                                                                                                                                                                                                                                    rotation.toValue = @((2-i)*M_PI/6);
-                                                                                                                                                                                                                                                                                                                                                                        POPBasicAnimation *move = [moveEndAnimations objectAtIndex:i];
-                                                                                                                                                                                                                                                                                                                                                                                            move.toValue = @(-62+i*287);
-                                                                                                                                                                                                                                                                                                                                                                                                                
-                                                                                                                                                                                                                                                                                                                                                                                                                UIImageView *imgView = [imgViews objectAtIndex:i];
-                                                                                                                                                                                                                                                                                                                                                                                                                                    [imgView.layer pop_addAnimation:rotation forKey:@"rotation"];
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        [imgView.layer pop_addAnimation:move forKey:@"move"];
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
-                                                                                                                                                                                                                                                                                                                    }
-                                                                                                                                                                                            }
-                                                                                                            }
+    CGPoint location = [recognizer locationInView:self.view];
+    if (recognizer.state == UIGestureRecognizerStateBegan) {
+        num = location.x;
+    }
+    NSMutableArray *rotationAnimations = [[NSMutableArray alloc]init];
+    NSMutableArray *moveAnimations = [[NSMutableArray alloc]init];
+    
+    NSMutableArray *rotationEndAnimations = [[NSMutableArray alloc]init];
+    NSMutableArray *moveEndAnimations = [[NSMutableArray alloc]init];
+    
+    for (int i = 0; i<5; i++) {
+        POPBasicAnimation *rotationAnimation = [POPBasicAnimation animationWithPropertyNamed:kPOPLayerRotationY];
+        rotationAnimation.duration = 0.01;
+        POPBasicAnimation *moveAnimation = [POPBasicAnimation animationWithPropertyNamed:kPOPLayerPositionX];
+        moveAnimation.duration = 0.01;
+        
+        [rotationAnimations addObject:rotationAnimation];
+        [moveAnimations addObject:moveAnimation];
+    }
+    if (YES) {
+        CGFloat percent = M_PI / (6*287);
+        
+        POPBasicAnimation *rotationAnimation = [POPBasicAnimation animationWithPropertyNamed:kPOPLayerRotationY];
+        rotationAnimation.duration = 0.01;
+        NSLog(@"%f, %lu",location.x, (unsigned long)num);
+        POPBasicAnimation *moveAnimation = [POPBasicAnimation animationWithPropertyNamed:kPOPLayerPositionX];
+        moveAnimation.duration = 0.01;
+        
+        if ((location.x-num)>350) {
+            for (int i = 0; i<4; i++) {
+                POPBasicAnimation *rotation = [rotationAnimations objectAtIndex:i];
+                rotation.toValue = @(-(350)*percent+(2-i)*M_PI/6);
+                POPBasicAnimation *move = [moveAnimations objectAtIndex:i];
+                move.toValue = @(350-62+i*287);
+                
+                UIImageView *imgView = [imgViews objectAtIndex:i];
+                [imgView.layer pop_addAnimation:rotation forKey:@"rotation"];
+                [imgView.layer pop_addAnimation:move forKey:@"move"];
+            }
+        } else if ((location.x-num)<-350) {
+            for (int i = 1; i<5; i++) {
+                POPBasicAnimation *rotation = [rotationAnimations objectAtIndex:i];
+                rotation.toValue = @(-(-350)*percent+(2-i)*M_PI/6);
+                POPBasicAnimation *move = [moveAnimations objectAtIndex:i];
+                move.toValue = @(-350-62+i*287);
+                
+                UIImageView *imgView = [imgViews objectAtIndex:i];
+                [imgView.layer pop_addAnimation:rotation forKey:@"rotation"];
+                [imgView.layer pop_addAnimation:move forKey:@"move"];
+            }
+        } else if ((location.x - num)>0) {
+            for (int i = 0; i<4; i++) {
+                POPBasicAnimation *rotation = [rotationAnimations objectAtIndex:i];
+                rotation.toValue = @(-(location.x-num)*percent+(2-i)*M_PI/6);
+                POPBasicAnimation *move = [moveAnimations objectAtIndex:i];
+                move.toValue = @(location.x-num-62+i*287);
+                
+                UIImageView *imgView = [imgViews objectAtIndex:i];
+                [imgView.layer pop_addAnimation:rotation forKey:@"rotation"];
+                [imgView.layer pop_addAnimation:move forKey:@"move"];
+            }
+        } else if ((location.x - num)<=0) {
+            for (int i = 1; i<5; i++) {
+                POPBasicAnimation *rotation = [rotationAnimations objectAtIndex:i];
+                rotation.toValue = @(-(location.x-num)*percent+(2-i)*M_PI/6);
+                POPBasicAnimation *move = [moveAnimations objectAtIndex:i];
+                move.toValue = @(location.x-num-62+i*287);
+                
+                UIImageView *imgView = [imgViews objectAtIndex:i];
+                [imgView.layer pop_addAnimation:rotation forKey:@"rotation"];
+                [imgView.layer pop_addAnimation:move forKey:@"move"];
+            }
+        }
+        
+        if (recognizer.state == UIGestureRecognizerStateEnded || recognizer.state == UIGestureRecognizerStateCancelled) {
+            for (int i = 0; i<5; i++) {
+                POPSpringAnimation *recoverAnimation = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerRotationY];
+                recoverAnimation.springBounciness = 18.0f;
+                recoverAnimation.dynamicsMass = 2.0f;
+                recoverAnimation.dynamicsTension = 200;
+                
+                POPSpringAnimation *recover = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerPositionX];
+                recover.springBounciness = 18.0f;
+                recover.dynamicsMass = 2.0f;
+                recover.dynamicsTension = 200;
+                
+                [rotationEndAnimations addObject:recoverAnimation];
+                [moveEndAnimations addObject:recover];
+            }
+            
+            POPSpringAnimation *recoverAnimation = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerRotationY];
+            recoverAnimation.springBounciness = 18.0f;
+            recoverAnimation.dynamicsMass = 2.0f;
+            recoverAnimation.dynamicsTension = 200;
+            
+            //            initialLocation = -img.frame.origin.x-img.frame.size.width/2;
+            if ((location.x-num)>50) {
+                for (int i = 0; i<4; i++) {
+                    POPBasicAnimation *rotation = [rotationEndAnimations objectAtIndex:i];
+                    rotation.toValue = @(-(287)*percent+(2-i)*M_PI/6);
+                    POPBasicAnimation *move = [moveEndAnimations objectAtIndex:i];
+                    move.toValue = @(287-62+i*287);
+                    
+                    UIImageView *imgView = [imgViews objectAtIndex:i];
+                    [imgView.layer pop_addAnimation:rotation forKey:@"rotation"];
+                    [imgView.layer pop_addAnimation:move forKey:@"move"];
+                }
+                [self moveRight];
+                
+            } else if ((location.x-num)<-50) {
+                for (int i = 1; i<5; i++) {
+                    POPBasicAnimation *rotation = [rotationEndAnimations objectAtIndex:i];
+                    rotation.toValue = @(-(-287)*percent+(2-i)*M_PI/6);
+                    POPBasicAnimation *move = [moveEndAnimations objectAtIndex:i];
+                    move.toValue = @(-287-62+i*287);
+                    
+                    UIImageView *imgView = [imgViews objectAtIndex:i];
+                    [imgView.layer pop_addAnimation:rotation forKey:@"rotation"];
+                    [imgView.layer pop_addAnimation:move forKey:@"move"];
+                }
+                [self moveLeft];
+                
+            } else {
+                for (int i = 0; i<5; i++) {
+                    POPBasicAnimation *rotation = [rotationEndAnimations objectAtIndex:i];
+                    rotation.toValue = @((2-i)*M_PI/6);
+                    POPBasicAnimation *move = [moveEndAnimations objectAtIndex:i];
+                    move.toValue = @(-62+i*287);
+                    
+                    UIImageView *imgView = [imgViews objectAtIndex:i];
+                    [imgView.layer pop_addAnimation:rotation forKey:@"rotation"];
+                    [imgView.layer pop_addAnimation:move forKey:@"move"];
+                }
+            }
+        }
+    }
 }
 ```
 由于重复的动画过多，这里只解释其中两种：
@@ -244,7 +252,4 @@ move.toValue = @(location.x-num-62+i*287);
 ```
 这样一个图片的动画就完成了。最后推广在到所有图片上，并为拖动距离添加一定的阈值即可完成动画。
 
-
-
-source ‘https://gitcafe.com/akuandev/Specs.git‘
 
