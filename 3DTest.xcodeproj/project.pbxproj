@@ -7,16 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		007BC6E41D46FAAF00B8930A /* image01.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 007BC6DF1D46FAAF00B8930A /* image01.JPG */; };
+		007BC6E51D46FAAF00B8930A /* image02.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 007BC6E01D46FAAF00B8930A /* image02.JPG */; };
+		007BC6E61D46FAAF00B8930A /* image03.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 007BC6E11D46FAAF00B8930A /* image03.JPG */; };
+		007BC6E71D46FAAF00B8930A /* image04.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 007BC6E21D46FAAF00B8930A /* image04.JPG */; };
+		007BC6E81D46FAAF00B8930A /* image05.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 007BC6E31D46FAAF00B8930A /* image05.JPG */; };
 		00DDBF971D45B7010053753F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 00DDBF961D45B7010053753F /* main.m */; };
 		00DDBF9A1D45B7010053753F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 00DDBF991D45B7010053753F /* AppDelegate.m */; };
 		00DDBFA21D45B7010053753F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00DDBFA11D45B7010053753F /* Assets.xcassets */; };
 		00DDBFA51D45B7010053753F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00DDBFA31D45B7010053753F /* LaunchScreen.storyboard */; };
 		00DDBFAE1D45B7850053753F /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00DDBFAD1D45B7850053753F /* RootViewController.m */; };
-		00DDBFB11D45D8180053753F /* aa.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 00DDBFB01D45D8180053753F /* aa.jpg */; };
 		FEEE85F6E6C082373F362355 /* Pods_3DTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6221EE8C5059334771DA33D /* Pods_3DTest.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		007BC6DF1D46FAAF00B8930A /* image01.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image01.JPG; sourceTree = "<group>"; };
+		007BC6E01D46FAAF00B8930A /* image02.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image02.JPG; sourceTree = "<group>"; };
+		007BC6E11D46FAAF00B8930A /* image03.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image03.JPG; sourceTree = "<group>"; };
+		007BC6E21D46FAAF00B8930A /* image04.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image04.JPG; sourceTree = "<group>"; };
+		007BC6E31D46FAAF00B8930A /* image05.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image05.JPG; sourceTree = "<group>"; };
 		00DDBF921D45B7010053753F /* 3DTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = 3DTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00DDBF961D45B7010053753F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		00DDBF981D45B7010053753F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -26,7 +35,6 @@
 		00DDBFA61D45B7010053753F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00DDBFAC1D45B7850053753F /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		00DDBFAD1D45B7850053753F /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
-		00DDBFB01D45D8180053753F /* aa.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = aa.jpg; path = ../../aa.jpg; sourceTree = "<group>"; };
 		37D802339BDA31B7A782C8A6 /* Pods-3DTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-3DTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-3DTest/Pods-3DTest.release.xcconfig"; sourceTree = "<group>"; };
 		B0BD73915B511FD32F5AB94D /* Pods-3DTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-3DTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-3DTest/Pods-3DTest.debug.xcconfig"; sourceTree = "<group>"; };
 		E6221EE8C5059334771DA33D /* Pods_3DTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_3DTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -44,6 +52,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		007BC6DE1D46FAAF00B8930A /* pictures */ = {
+			isa = PBXGroup;
+			children = (
+				007BC6DF1D46FAAF00B8930A /* image01.JPG */,
+				007BC6E01D46FAAF00B8930A /* image02.JPG */,
+				007BC6E11D46FAAF00B8930A /* image03.JPG */,
+				007BC6E21D46FAAF00B8930A /* image04.JPG */,
+				007BC6E31D46FAAF00B8930A /* image05.JPG */,
+			);
+			path = pictures;
+			sourceTree = SOURCE_ROOT;
+		};
 		00DDBF891D45B7010053753F = {
 			isa = PBXGroup;
 			children = (
@@ -65,11 +85,11 @@
 		00DDBF941D45B7010053753F /* 3DTest */ = {
 			isa = PBXGroup;
 			children = (
+				007BC6DE1D46FAAF00B8930A /* pictures */,
 				00DDBF981D45B7010053753F /* AppDelegate.h */,
 				00DDBF991D45B7010053753F /* AppDelegate.m */,
 				00DDBFAC1D45B7850053753F /* RootViewController.h */,
 				00DDBFAD1D45B7850053753F /* RootViewController.m */,
-				00DDBFB01D45D8180053753F /* aa.jpg */,
 				00DDBFA11D45B7010053753F /* Assets.xcassets */,
 				00DDBFA31D45B7010053753F /* LaunchScreen.storyboard */,
 				00DDBFA61D45B7010053753F /* Info.plist */,
@@ -164,9 +184,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00DDBFB11D45D8180053753F /* aa.jpg in Resources */,
 				00DDBFA51D45B7010053753F /* LaunchScreen.storyboard in Resources */,
+				007BC6E61D46FAAF00B8930A /* image03.JPG in Resources */,
+				007BC6E81D46FAAF00B8930A /* image05.JPG in Resources */,
 				00DDBFA21D45B7010053753F /* Assets.xcassets in Resources */,
+				007BC6E41D46FAAF00B8930A /* image01.JPG in Resources */,
+				007BC6E51D46FAAF00B8930A /* image02.JPG in Resources */,
+				007BC6E71D46FAAF00B8930A /* image04.JPG in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
